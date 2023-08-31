@@ -1,0 +1,10 @@
+go 1.21.0
+
+use (
+	./admin
+	./api-gateway
+	./cart
+	./order
+	./product
+	./users
+)

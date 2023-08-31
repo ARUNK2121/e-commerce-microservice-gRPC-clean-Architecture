@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "./pkg/proto";
+
+service User {
+  rpc UserSignUp(UserSignUpRequest) returns (UserSignUpResponse) {};
+  rpc UserLogin(UserLoginRequest) returns (UserLoginResponse) {};
+}
+
+// Register
+message UserSignUpRequest {
+  string name = 1;
+  string email = 2;
+  string phone = 3;
+  string password = 4;
+  string confirmpassword = 5;
+}
+
+message UserSignUpResponse {
+  int64 status = 1;
+  string error = 2;
+}
+
+message UserLoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message UserLoginResponse {
+  string token = 1;
+  string status = 2;
+  string error = 3;
+}

@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package cart;
+
+option go_package = "./pkg/pb";
+
+service Cart {
+  rpc AddToCart(AddToCartRequest) returns (AddToCartResponse) {};
+  rpc GetCart(GetCartRequest) returns (GetCartResponse) {};
+}
+
+
+message AddToCartRequest{
+    int64 user_id =1;
+    int64 product_id =2;
+}
+
+message AddToCartResponse{
+    int64 status =1;
+    string error =2;
+}
+
+message GetCartRequest{
+    int64 id =1;
+}
+
+message GetCartResponse{
+    repeated GetCart items =1;
+}
+
+message GetCart{
+    string ProductName =1;
+    int64 Category_id =2;
+    int64  Quantity =3;
+    float  Total =4;
+}

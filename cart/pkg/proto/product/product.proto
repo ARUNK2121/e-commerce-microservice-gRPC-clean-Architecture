@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package product;
+
+option go_package = "./pkg/proto/pb";
+
+service Product {
+    rpc AddProduct(AddProductRequest) returns (AddProductResponse) {};
+    rpc ListProducts(ListProductRequest) returns (ListProductResponse) {};
+    rpc GetStockOfProducts(GetStockRequest) returns (GetStockResponse) {};
+    rpc GetProductsDetails(GetDetailsRequest) returns (GetDetailsResponse) {};
+}
+
+message GetDetailsRequest{
+    repeated int64 products = 1;
+}
+
+message CartProducts{
+    string  ProductName= 1;    
+	int64   Category_id= 2;      
+    int64   Quantity= 3;       
+    float   Total= 4;          
+}
+
+message GetDetailsResponse{
+    repeated CartProducts details= 1;
+}
+
+message GetStockRequest{
+    int64 ProductID = 1;
+}
+
+message GetStockResponse{
+    int64 Stock = 1;
+}
+
+message AddProductRequest{
+    int64 ID = 1;
+    int64 CategoryID = 2;
+    string ProductName = 3;
+    string Size = 4;
+    int64 Stock = 5;
+    float Price = 6;
+}
+
+message AddProductResponse{
+    int64 status = 1;
+}
+
+message ListProductRequest{
+    int64 Page = 1;
+}
+
+message ProductDetails{
+    int64 ID = 1;
+    int64 CategoryID = 2;
+    string ProductName = 3;
+    string Size = 4;
+    int64 Stock = 5;
+    float Price = 6;
+}
+
+message ListProductResponse{
+    repeated ProductDetails LisrtProducts = 1;
+}
+

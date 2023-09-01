@@ -7,6 +7,7 @@ import (
 	"api_gateway/pkg/utils/models"
 	"context"
 	"fmt"
+	"time"
 
 	"google.golang.org/grpc"
 )
@@ -31,7 +32,10 @@ func NewProductClient(cfg config.Config) interfaces.ProductClient {
 }
 
 func (p *productClient) AddProduct(model models.Inventories) (int, error) {
-	res, err := p.Client.AddProduct(context.Background(), &pb.AddProductRequest{
+	//gin context here!!
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	res, err := p.Client.AddProduct(ctx, &pb.AddProductRequest{
 		ID:          int64(model.ID),
 		CategoryID:  int64(model.CategoryID),
 		ProductName: model.ProductName,
@@ -40,7 +44,7 @@ func (p *productClient) AddProduct(model models.Inventories) (int, error) {
 		Price:       float32(model.Price),
 	})
 	if err != nil {
-		return 500, nil
+		return 500, err
 	}
 
 	return int(res.Status), nil
